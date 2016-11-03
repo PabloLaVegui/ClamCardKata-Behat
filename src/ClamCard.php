@@ -9,9 +9,12 @@ class ClamCard
     private $prices;
     private $id;
 
+    private $journeys;
+
     public function __construct(Prices $prices)
     {
         $this->prices = $prices;
+        $journeys = [];
     }
 
     public function setId($id)
@@ -19,8 +22,15 @@ class ClamCard
         $this->id = $id;
     }
 
-    public function charge(Journey $journey)
+    public function addJourney(Journey $journey)
     {
-        return $this->prices->getPrice($journey->from(), $journey->to());
+        $this->journeys[] = $journey;
+    }
+
+    public function charge($journeyNumber)
+    {
+        $journey = $this->journeys[$journeyNumber - 1];
+
+        return $this->prices->getPrice($journey);
     }
 }
