@@ -30,7 +30,6 @@ class FeatureContext implements Context
     {
         $prices = new Prices();
         $this->clamCard = new ClamCard($prices);
-        $this->journey = new Journey();
     }
 
     /**
@@ -46,8 +45,11 @@ class FeatureContext implements Context
      */
     public function michaelTravelsFromTo($from, $to)
     {
-        $this->journey->setFrom($from);
-        $this->journey->setTo($to);
+        $journey = New Journey();
+        $journey->setFrom($from);
+        $journey->setTo($to);
+
+        $this->clamCard->addJourney($journey);
     }
 
     /**
@@ -57,7 +59,18 @@ class FeatureContext implements Context
     {
         PHPUnit_Framework_Assert::assertSame(
             $price,
-            $this->clamCard->charge($this->journey)
+            $this->clamCard->charge(1)
+        );
+    }
+
+    /**
+     * @Then Michael will be charged £:price for his journey number :journeyNumber
+     */
+    public function michaelWillBeChargedPsForHisJourneyNumber($price, $journeyNumber)
+    {
+        PHPUnit_Framework_Assert::assertSame(
+            $price,
+            $this->clamCard->charge($journeyNumber)
         );
     }
 }
