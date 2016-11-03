@@ -5,7 +5,9 @@ class Stations
 {
     const STATION_ZONE = [
         'Asterisk' => 'zoneA',
-        'Aldgate' => 'zoneA'
+        'Aldgate' => 'zoneA',
+        'Barbican' => 'zoneB',
+        'Balham' => 'zoneB'
     ];
 
     public static function getZone($station)
